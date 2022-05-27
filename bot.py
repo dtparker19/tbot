@@ -1,10 +1,10 @@
-from curses.panel import bottom_panel
-from tokenize import Token
+
 from telegram.ext import Updater, CommandHandler, CallbackContext, MessageHandler, Filters
 from telegram import *
 from TBOT.credentials import bot_token, bot_username, URL
 import requests
 import os
+
 
 
 PORT = int(os.environ.get('PORT', 5000))
@@ -29,7 +29,7 @@ def get_Download_URL_From_API(url):
     res = conn.getresponse()
     data = res.read()
 
-print(data.decode("utf-8"))
+    print(data.decode("utf-8"))
 
 
 def start(update: Update, context: CallbackContext):
@@ -54,3 +54,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    

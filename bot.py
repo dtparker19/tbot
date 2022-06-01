@@ -1,22 +1,21 @@
-
 from telegram.ext import Updater, CommandHandler, CallbackContext, MessageHandler, Filters
 from telegram import *
-from TBOT.credentials import bot_token, bot_username, URL
-import requests
+#from .credentials import bot_token, bot_username, URL
 import os
 
 
 
 PORT = int(os.environ.get('PORT', 5000))
-
+bot_token='5568074595:AAGljtYJoEL1nh7tS4f4hUFQD_NPhgGh3j4'
+bot_username='Prodigy8_bot'
+URL='https://prodigy8-bot.herokuapp.com'
 global bot
 global TOKEN
 TOKEN=bot_token
 
 def get_Download_URL_From_API(url):
     API_URL = "https://getvideo.p.rapidapi.com/"
-    querystring = {"url": f"{url}"}
-
+                           
     conn = http.client.HTTPSConnection("youtube-search-and-download.p.rapidapi.com")
 
     headers = {
@@ -24,12 +23,12 @@ def get_Download_URL_From_API(url):
         'X-RapidAPI-Key': "971ed126b4msh71440a93902ba14p159054jsn269737d77060"
     }
 
-    conn.request("GET", "/video/related?id=" + querystring, headers=headers)
+    conn.request("GET", "/video/related?id=" + url, headers=headers)
 
     res = conn.getresponse()
-    data = res.read()
-
+    data = res.json()
     print(data.decode("utf-8"))
+    return data
 
 
 def start(update: Update, context: CallbackContext):
@@ -49,9 +48,8 @@ def main():
     updater.start_webhook(listen="0.0.0.0",
                           port=int(PORT),
                           url_path=TOKEN)
-    updater.bot.setWebhook('https://prodigy8-bot.herokuapp.com/' + TOKEN)
+    updater.bot.setWebhook(URL + TOKEN)
     updater.idle()
 
 if __name__ == '__main__':
     main()
-    
